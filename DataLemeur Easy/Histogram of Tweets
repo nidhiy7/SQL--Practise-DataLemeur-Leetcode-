@@ -1,1 +1,33 @@
 
+# Histogram of Tweets
+
+WITH UserTweetCounts AS (
+    -- Step 1: Filter tweets for the year 2022 and count tweets per user
+    SELECT 
+        user_id, 
+        COUNT(*) AS tweet_count
+    FROM 
+        tweets
+    WHERE 
+        EXTRACT(YEAR FROM tweet_date) = 2022
+    GROUP BY 
+        user_id
+),
+TweetBuckets AS (
+    -- Step 2: Count how many users have each tweet count
+    SELECT 
+        tweet_count AS tweet_bucket, 
+        COUNT(*) AS users_num
+    FROM 
+        UserTweetCounts
+    GROUP BY 
+        tweet_count
+)
+-- Step 3: Output the results
+SELECT 
+    tweet_bucket, 
+    users_num
+FROM 
+    TweetBuckets
+ORDER BY 
+    tweet_bucket;
