@@ -1,0 +1,9 @@
+select d.employee_id,
+CASE
+when sum(d.deal_size)>s.quota THEN 'yes' ELSE 'no'
+END AS made_quota
+from deals d  
+left join sales_quotas s  
+on d.employee_id = s.employee_id
+Group by d.employee_id, s.quota
+order by d.employee_id asc;
