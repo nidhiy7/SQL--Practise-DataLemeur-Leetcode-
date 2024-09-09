@@ -1,0 +1,6 @@
+
+SELECT 
+    ROUND(1.0 * SUM(CASE WHEN T.signup_action = 'Confirmed' THEN 1 ELSE 0 END) / COUNT(DISTINCT E.user_id), 2) AS activation_rate
+FROM Emails E   
+LEFT JOIN texts T  
+ON E.email_id = T.email_id;
