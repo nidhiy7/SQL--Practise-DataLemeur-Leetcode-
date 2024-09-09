@@ -1,1 +1,12 @@
+with cte as(SELECT B.age_bucket as age_bucket,
+sum(case when activity_type = 'open' then time_spent else 0 end ) as total_open ,
+sum(case when activity_type = 'send' then time_spent else 0 end ) as total_send 
+From activities A  
+Join age_breakdown B  
+ON A.user_id = B.user_id 
+Group by B.age_bucket)
 
+select age_bucket,
+round(total_send *100/(total_open+total_send),2) as send_per,
+round(total_open *100/(total_open+total_send),2) as open_per
+from cte
