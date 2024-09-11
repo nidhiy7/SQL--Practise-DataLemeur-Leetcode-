@@ -1,0 +1,14 @@
+Odd and Even Measurements
+
+WITH cte AS (
+    SELECT *,
+           ROW_NUMBER() OVER(PARTITION BY CAST(measurement_time AS DATE) ORDER BY measurement_time) AS measurement_order
+    FROM measurements
+)
+SELECT 
+    CAST(measurement_time AS DATE) AS measurement_date,
+    SUM(CASE WHEN measurement_order % 2 = 0 THEN measurement_value ELSE 0 END) AS even_sum,
+    SUM(CASE WHEN measurement_order % 2 != 0 THEN measurement_value ELSE 0 END) AS odd_sum
+FROM cte
+GROUP BY CAST(measurement_time AS DATE)
+Order by measurement_date;
