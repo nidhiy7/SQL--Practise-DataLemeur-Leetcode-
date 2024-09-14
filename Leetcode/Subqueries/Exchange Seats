@@ -1,0 +1,11 @@
+SELECT 
+  CASE 
+    WHEN id=(select max(id) from Seat) and mod(id,2) = 1 then id
+    WHEN MOD(id, 2) = 1 THEN id + 1  -- For odd ids, increase by 1
+    WHEN MOD(id, 2) = 0 THEN id - 1  -- For even ids, decrease by 1
+  END AS id,  -- Alias the result as 'id'
+  student  -- Select the student column as is
+FROM 
+  Seat
+ORDER BY 
+  id;  -- Sort the result by the swapped id
