@@ -1,0 +1,5 @@
+select EU.unique_id , E.name
+From Employees E
+left join EmployeeUNI EU
+on EU.id = E.id 
+order by E.name
