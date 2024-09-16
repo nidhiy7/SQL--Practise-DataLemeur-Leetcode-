@@ -1,0 +1,10 @@
+# Customer Who Visited but Did Not Make Any Transactions
+
+select v.customer_id , count (v.visit_id) as count_no_trans 
+From visits v
+left join 
+transactions t 
+on v.visit_id = t.visit_id 
+where t.transaction_id is null
+Group by v.customer_id
+order by count_no_trans asc
