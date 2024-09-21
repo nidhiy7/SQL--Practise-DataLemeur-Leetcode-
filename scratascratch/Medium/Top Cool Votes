@@ -1,0 +1,6 @@
+with cte as (select business_name , review_text , cool ,
+rank() over(order by cool desc) as rnk
+from yelp_reviews)
+
+ select business_name, review_text
+ from cte where rnk = 1;
