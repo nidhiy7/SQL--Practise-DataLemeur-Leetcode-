@@ -1,0 +1,6 @@
+
+select from_user,
+count(id) as total_emails,
+row_number() over(order by count(id) desc , from_user asc) as row_number
+FROM google_gmail_emails
+Group by from_user ;
