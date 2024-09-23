@@ -1,0 +1,14 @@
+with t1 as (select company_name, count(distinct product_name ) as n_2020
+ from car_launches
+where year = 2020
+group by company_name) 
+,
+t2 as (select company_name, count(distinct product_name ) as n_2019
+from car_launches
+where year = 2019
+group by company_name)
+
+select t1.company_name , t1.n_2020 - t2.n_2019 as net_products
+from t1
+join t2
+on t1.company_name = t2.company_name ;
