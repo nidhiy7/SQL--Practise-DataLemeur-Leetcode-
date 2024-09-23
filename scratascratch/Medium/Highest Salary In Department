@@ -1,0 +1,9 @@
+
+with t1 as (
+select first_name , department , salary ,
+row_number () over (partition by department order by salary desc ) as rn
+from employee
+)
+
+select  department ,first_name , salary 
+from t1 where rn = 1;
