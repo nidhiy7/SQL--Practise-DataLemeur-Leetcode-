@@ -1,0 +1,14 @@
+WITH t1 AS (
+    SELECT MAX(e.salary) AS max_mart
+    FROM db_employee e
+    JOIN db_dept dept ON e.department_id = dept.id
+    WHERE dept.department = 'marketing'
+),
+t2 AS (
+    SELECT MAX(e.salary) AS max_eng
+    FROM db_employee e
+    JOIN db_dept dept ON e.department_id = dept.id
+    WHERE dept.department = 'engineering'
+)
+SELECT t1.max_mart - t2.max_eng AS salary_difference
+FROM t1, t2;
