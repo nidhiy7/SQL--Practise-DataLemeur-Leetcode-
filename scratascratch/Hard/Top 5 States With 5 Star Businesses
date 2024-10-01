@@ -1,0 +1,11 @@
+with t1 as (select state , count(stars) as n_businesses
+from yelp_business
+where  stars = 5
+Group by state), 
+t2 as
+(select top 5 n_businesses from t1 
+order by n_businesses desc)
+
+select * from t1 
+where n_businesses in (Select * from t2)
+order by n_businesses desc, state asc
